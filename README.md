@@ -4,3 +4,4 @@ Utilizzo della libreria [libpng](http://www.libpng.org/pub/png/libpng.html) per 
 
 Test image
 
+![alt text](https://github.com/FRSYH/mandelbrot-set-image-creator/tree/master/zoom.png)
