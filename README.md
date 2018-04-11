@@ -1,1 +1,6 @@
 # mandelbrot-set-image-creator
+
+Utilizzo della libreria [libpng](http://www.libpng.org/pub/png/libpng.html) per creare immagini dei frattali di [Mandelbrot](https://en.wikipedia.org/wiki/Mandelbrot_set)
+
+Test image
+

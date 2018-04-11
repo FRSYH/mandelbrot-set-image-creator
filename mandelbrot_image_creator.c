@@ -142,9 +142,9 @@ void setPixel(png_byte *ptr, png_byte* colors, int iterations, double zn){
 				nsmooth = 0.0;
 			}
 
-			ptr[0] = nsmooth * nsmooth * nsmooth * 255;
+			ptr[0] = nsmooth * 255;
 			ptr[1] = nsmooth * 255;
-			ptr[2] = nsmooth *  255;
+			ptr[2] = nsmooth * nsmooth * nsmooth * 255;
 		}
 /*
 		ptr[0] = colors[index];
