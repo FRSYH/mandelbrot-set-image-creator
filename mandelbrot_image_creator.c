@@ -4,7 +4,7 @@
 #include <math.h>
 
 #define ERROR 1
-#define MAX_ITERATION 1000
+#define MAX_ITERATION 2000
 
 
 void setPixel(png_byte *ptr, png_byte* colors, int iterations, double zn);
@@ -68,8 +68,9 @@ int main(int argc, char const *argv[])
 	double c_re = 0.0;
 	double c_im = 0.0;
 
-	double shift_x = -0.51;
-	double shift_y = -0.620;
+	double shift_x = -0.5;
+	double shift_y = -0.0;
+	double zoom = 4.5;
 /*	
 	double shift_x = -0.51;
 	double shift_y = -0.620;	
@@ -79,7 +80,6 @@ int main(int argc, char const *argv[])
 	
 	double x_center = width / 2.0;
 	double y_center = height / 2.0;
-	double zoom = 0.13;
 
 	double nsmooth = 0.0;
 	double zn = 0.0;
@@ -124,12 +124,12 @@ void setPixel(png_byte *ptr, png_byte* colors, int iterations, double zn){
 	
 	double nsmooth = 0.0;
 	double x = 0.0;
-	int index = (iterations % 16) * 3;
-	
+
 	if (iterations < MAX_ITERATION -1 ) {
 
 		nsmooth = log( iterations + 2 - log( log(zn)/log(2) )) / 4.0;
 		if(nsmooth < 1.0){
+			//blue
 			ptr[0] = nsmooth * nsmooth * nsmooth * nsmooth * 255;
 			ptr[1] = nsmooth * nsmooth * 255;
 			ptr[2] = nsmooth * 255;	
@@ -141,22 +141,18 @@ void setPixel(png_byte *ptr, png_byte* colors, int iterations, double zn){
 			}else{
 				nsmooth = 0.0;
 			}
-
+			//sepia ???
 			ptr[0] = nsmooth * 255;
 			ptr[1] = nsmooth * 255;
-			ptr[2] = nsmooth * nsmooth * nsmooth * 255;
+			ptr[2] = nsmooth * nsmooth * 255;
 		}
-/*
-		ptr[0] = colors[index];
-		ptr[1] = colors[index+1];
-		ptr[2] = colors[index+2];	
-*/
+
 	}else {
+		//black
 		ptr[0] = 0;
 		ptr[1] = 0;
 		ptr[2] = 0;		
 	}
-
 }
 
 
@@ -191,32 +187,15 @@ int TestMandelbrotConvergence(double c_re, double c_im, double *zn){
 	int iteration = 0;
 	double x = 0.0, y = 0.0, x_new = 0.0;
 
-	while (((x*x) + (y*y) < 16) && (iteration < MAX_ITERATION)) {
+	while (((x*x) + (y*y) < 20) && (iteration < MAX_ITERATION)) {
 		x_new = (x * x) - (y * y) + c_re;
 		y = (2 * x*y) + c_im;
 		x = x_new;
 		iteration++;
 
 	}
-
-	x_new = (x * x) - (y * y) + c_re;
-	y = (2 * x*y) + c_im;
-	x = x_new;
-	iteration++;
-
-	x_new = (x * x) - (y * y) + c_re;
-	y = (2 * x*y) + c_im;
-	x = x_new;
-	iteration++;
-
-	x_new = (x * x) - (y * y) + c_re;
-	y = (2 * x*y) + c_im;
-	x = x_new;
-	iteration++;
-
 	//absolute value of last zn
 	*zn = sqrt( x*x + y*y );
-
 	return iteration;
 }
 
